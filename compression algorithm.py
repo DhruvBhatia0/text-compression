@@ -1,15 +1,30 @@
 #HUFFMAN COMPRESSION
+
+#binary to integer functions
+def binaryToDecimal(binary):
+    binary1 = binary
+    decimal, i, n = 0, 0, 0
+    while (binary != 0):
+        dec = binary % 10
+        decimal = decimal + dec * pow(2, i)
+        binary = binary // 10
+        i += 1
+    return(decimal)
+
+def DecimalToBinary(num):
+    return bin(num).replace('0b',"")
+
 #accepting the string
 print('this program compresses text!')
-str=input('please enter a string \n')
-print(f"the string you entered is \n {str}")
-print(f'your data is {len(str)*8} bits long')
+stri=input('please enter a string \n')
+print(f"the string you entered is \n {stri}")
+print(f'your data is {len(stri)*8} bits long')
 
 #making a list, finding the frequency
 letters,letterlol=[],[]
-for letter in str:
+for letter in stri:
     if letter not in letterlol:
-        letters.append(str.count(letter))
+        letters.append(stri.count(letter))
         letters.append(letter)
         letterlol.append(letter)
 
@@ -62,7 +77,7 @@ print()
 letterb=[]
 if len(letterlol)==1:
     letter_code=[letterlol[0],'0']
-    letterb.append(letter_code*len(str))
+    letterb.append(letter_code*len(stri))
 else:
     for letter in letterlol:
         lettercode=''
@@ -78,24 +93,29 @@ for letter in letterb:
 
 #creating the real bitstring
 bit=''
-for char in str:
+for char in stri:
     for i in letterb:
         if char in i:
             bit+=i[1]
-#obtaining the binary digit
-binary=bin(int(bit))
-print(bit)
+
+#obtaining the integer called binary(because i messed up initially)
+'''binary=bin(int(bit))
+print(bit)'''
+binary=binaryToDecimal(int(bit))
+#print(binary)
+a= str(binary)
+#print(a)
 
 #summary
 print(f'''the original file length is-
-{len(str)*8} bits''')
+{len(stri)*8} bits''')
 print(f'''and the final length is-
-{len(binary)} bits''')
-print(f'the compression ratio is \n {(len(str)*8)/len(binary)}')
+{len(a)*4} bits''')
+print(f'the compression ratio is \n {(len(stri)*2)/len(a)}')
 print(f'your binary message is \n {binary}')
 
 #decompression
-bitstring=bit
+bitstring=DecimalToBinary(binary)
 uncompressed_string=''
 code=''
 for digit in bitstring:
